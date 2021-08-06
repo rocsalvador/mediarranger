@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ca_months=("Gener" "Febrer" "Març" "Abril" "Maig" "Juny" "Juliol" "Agost" "Setembre" "Octubre" "Novembre" "Desembre")
+en_months=("January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December")
+
 arrangeimages() {
     if [ "${PDIR: -1}" != "/" ]; then
         PDIR=$PDIR/
@@ -14,31 +17,11 @@ arrangeimages() {
             if [ "$date" != "" ]; then
                 year=$(echo $date | cut -b 16-19)
                 month=$(echo $date | cut -b 21-22)
-                if [ $month -eq 1 ]; then
-                    month="Gener"
-                elif [ $month -eq 2 ]; then
-                    month="Febrer"
-                elif [ $month -eq 3 ]; then
-                    month="Març"
-                elif [ $month -eq 4 ]; then
-                    month="Abril"
-                elif [ $month -eq 5 ]; then
-                    month="Maig"
-                elif [ $month -eq 6 ]; then
-                    month="Juny"
-                elif [ $month -eq 7 ]; then
-                    month="Juliol"
-                elif [ $month -eq 8 ]; then
-                    month="Agost"
-                elif [ $month -eq 9 ]; then
-                    month="Setembre"
-                elif [ $month -eq 10 ]; then
-                    month="Octubre"
-                elif [ $month -eq 11 ]; then
-                    month="Novembre"
-                elif [ $month -eq 12 ]; then
-                    month="Desembre"
+                if [ $month -lt  10 ]; then
+                    month=${month:1}
                 fi
+
+                month=${monthsarray[$((month-1))]}
 
                 if [ ! -d $BDIR$year/$month ]; then
                     mkdir -p $BDIR$year/$month
@@ -65,8 +48,15 @@ if [ "${BDIR: -1}" != "/" ]; then
 fi
 echo -n "Directory where the photos are located: "
 read PDIR
+
 np=0
 tp=0
+if [ "$LANG" = "ca_ES.UTF-8" ]; then
+    monthsarray=("${ca_months[@]}")
+else
+    monthsarray=("${en_months[@]}")
+fi
+
 arrangeimages
 
 echo
