@@ -1,5 +1,5 @@
 # mediarranger
-A simple bash script to arrange photos and videos in years and months
+A simple bash script to arrange photos and videos by years and months
 ## Dependencies
 - exif
 - mediainfo
