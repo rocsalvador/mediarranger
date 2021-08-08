@@ -4,9 +4,6 @@ ca_months=("Gener" "Febrer" "Març" "Abril" "Maig" "Juny" "Juliol" "Agost" "Sete
 en_months=("January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December")
 
 arrangemedia() {
-    year=$(echo "$date" | cut -b 16-19)
-    month=$(echo "$date" | cut -b 21-22)
-    monthindex=$month
     if [ "$month" -lt  10 ]; then
         monthindex=${month:1}
     fi
@@ -34,6 +31,9 @@ checksdir() {
         if [ -f "$file" ]; then
             if [[ $file == *.jpg ]]; then
                 date=$(exif "$file" 2> /dev/null | grep "Date and Time  ")
+                year=$(echo $date | cut -b 16-19)
+                month=$(echo $date | cut -b 21-22)
+                monthindex=$month
 
                 if [ "$date" != "" ]; then
                     arrangemedia
@@ -43,6 +43,16 @@ checksdir() {
                 fi
             elif [[ $file == *.mp4 ]] || [[ $file == *.MP4 ]]; then
                 date=$(mediainfo "$file" 2> /dev/null | grep "Tagged date")
+                year=$(echo $date | cut -b 19-22)
+                month=$(echo $date | cut -b 24-25)
+                monthindex=$month
+
+                if [ "$date" != "" ]; then
+                    arrangemedia
+                else
+                    echo "$file" metadata does not contain date info or it is not compatible
+                    tp=$(( tp + 1 ))
+                fi
             fi
         elif [ "$RECURSIVE" -eq 1 ] && [ -d "$file" ]; then
             SDIR=$file
@@ -53,7 +63,7 @@ checksdir() {
 
 usage() {
     echo "USAGE:"
-    echo "photoarranger -s /path/to/source/dir -o /path/to/output/dir [OPTIONAL ARGUMENTS]"
+    echo "mediarranger -s /path/to/source/dir -o /path/to/output/dir [OPTIONAL ARGUMENTS]"
     echo
     echo "OPTIONAL ARGUMENTS:"
     echo "-r | --recursive      All subdirectories of source directory will be checked"
