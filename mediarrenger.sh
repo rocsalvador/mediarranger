@@ -16,7 +16,7 @@ arrangemedia() {
 
     mv "$file" "$ODIR$year/$month-$monthname" 2> /dev/null
 
-    np=$(( np + 1 ))
+    NP=$(( NP + 1 ))
 }
 
 checksdir() {
@@ -30,28 +30,36 @@ checksdir() {
     do
         if [ -f "$file" ]; then
             if [[ $file == *.jpg ]]; then
-                date=$(exif "$file" 2> /dev/null | grep "Date and Time  ")
-                year=$(echo $date | cut -b 16-19)
-                month=$(echo $date | cut -b 21-22)
-                monthindex=$month
+                date=$(exif "$file" 2> /dev/null | grep "Date and Time       |")
 
                 if [ "$date" != "" ]; then
+                    # Date and Time |2011:02:23 12:45:23
+                    date=${date##*|}
+                    year=${date%%:*}
+                    month=${date#*:}
+                    month=${month%%:*}
+                    monthindex=$month
+
                     arrangemedia
                 else
                     echo "$file" metadata does not contain date info or it is not compatible
-                    tp=$(( tp + 1 ))
+                    TP=$(( TP + 1 ))
                 fi
             elif [[ $file == *.mp4 ]] || [[ $file == *.MP4 ]]; then
-                date=$(mediainfo "$file" 2> /dev/null | grep "Tagged date")
-                year=$(echo $date | cut -b 19-22)
-                month=$(echo $date | cut -b 24-25)
-                monthindex=$month
+                date=$(mediainfo "$file" 2> /dev/null | grep -m 1 "Tagged date")
 
                 if [ "$date" != "" ]; then
+                    # Tagged date : UTC 2010-03-01 18:07:00
+                    date=${date#*UTC }
+                    year=${date%%-*}
+                    month=${date#*-}
+                    month=${month%%-*}
+                    monthindex=$month
+
                     arrangemedia
                 else
                     echo "$file" metadata does not contain date info or it is not compatible
-                    tp=$(( tp + 1 ))
+                    TP=$(( TP + 1 ))
                 fi
             fi
         elif [ "$RECURSIVE" -eq 1 ] && [ -d "$file" ]; then
@@ -83,7 +91,7 @@ while [[ $# -gt 0 ]]; do
         ;;
     -s|--sourcepath)
         SDIR="$2"
-        if [ ! -d "$SDIR" ]; then
+        if [ ! -d "$SDIR" ] || [ "$SDIR" = "" ]; then
             echo "ERROR: invalid source path"
             exit 1
         fi
@@ -93,7 +101,7 @@ while [[ $# -gt 0 ]]; do
         ;;
     -o|--outputpath)
         ODIR="$2"
-        if [ ! -d "$ODIR" ]; then
+        if [ ! -d "$ODIR" ] || [ "$ODIR" = "" ]; then
             echo "ERROR: invalid output path"
             exit 1
         fi
@@ -117,8 +125,8 @@ if [ $OFLAG -eq 0 ] || [ $SFLAG -eq 0 ]; then
     exit
 fi
 
-np=0
-tp=0
+NP=0
+TP=0
 if [ "$LANG" = "ca_ES.UTF-8" ]; then
     monthsarray=("${ca_months[@]}")
 else
@@ -128,7 +136,7 @@ fi
 checksdir
 
 echo
-tp=$(( np + tp ))
-echo "Done! $np media files of $tp have been arranged correctly"
+TP=$(( NP + TP ))
+echo "Done! $NP media files of $TP have been arranged correctly"
 echo "Press return to exit"
 read -r
