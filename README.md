@@ -1,4 +1,11 @@
-# photoarranger
-A simple bash script to arrange photos in years and months
+# mediarranger
+A simple bash script to arrange photos and videos by years and months
 ## Dependencies
-- exif ([link](https://sourceforge.net/projects/libexif/))
+- exif
+- mediainfo
+## Usage
+`$ mediarranger -s /path/to/source/dir -o /path/to/output/dir [OPTIONAL ARGUMENTS]`
+
+Options:
+
+`-r | --recursive      All subdirectories of source directory will be checked`
