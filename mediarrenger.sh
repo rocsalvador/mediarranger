@@ -42,7 +42,7 @@ checksdir() {
 
                     arrangemedia
                 else
-                    echo "$file" metadata does not contain date info or it is not compatible
+                    echo "$file metadata does not contain date info or it is not compatible"
                     TP=$(( TP + 1 ))
                 fi
             elif [[ $file == *.mp4 ]] || [[ $file == *.MP4 ]]; then
@@ -120,7 +120,25 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ $OFLAG -eq 0 ] || [ $SFLAG -eq 0 ]; then
+if [ $OFLAG -eq 0 ] && [ $SFLAG -eq 0 ]; then
+    echo -n "Directory where the images are stored: "
+    read SDIR
+    while [ ! -d $SDIR ] || [ "$SDIR" = "" ]; do
+        echo -n "!! Invalid source directory, try again: "
+        read -r SDIR
+    done
+    echo -n "Directory where the images will be stored: "
+    read ODIR
+    while [ ! -d $ODIR ] || [ "$ODIR" = "" ]; do
+        echo -n "!! Invalid output directory, try again: "
+        read -r ODIR
+    done
+    echo -n "Recursive search? [Y/n] "
+    read -r INPUT
+    if [ "$INPUT" = "" ] || [ "$INPUT" = "Y" ] || [ "$INPUT" = "y" ]; then
+        RECURSIVE=1
+    fi
+elif [ $OFLAG -eq 0 ] || [ $SFLAG -eq 0 ]; then
     usage
     exit
 fi
@@ -138,5 +156,7 @@ checksdir
 echo
 TP=$(( NP + TP ))
 echo "Done! $NP media files of $TP have been arranged correctly"
-echo "Press return to exit"
-read -r
+if [ $OFLAG -eq 0 ] && [ $SFLAG -eq 0 ]; then
+    echo "Press return to exit"
+    read -r
+fi
