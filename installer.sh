@@ -1,44 +1,47 @@
 #!/bin/bash
 
+SCRIPTPATH="/usr/bin/mediarranger"
+DESKTPATH="/usr/share/applications/mediarranger.desktop"
+
 if [ $USER != root ]; then
     echo !! You must be root
     exit 1
 fi
 
 if [ "$1" = "-r" ]; then
-    if [ ! -f /usr/bin/mediarrenger ]; then
-        echo "mediarrenger is not installed"
+    if [ ! -f $SCRIPTPATH ]; then
+        echo "mediarranger is not installed"
         exit
     fi
 
-    rm /usr/bin/mediarrenger
-    rm /usr/share/applications/mediarrenger.desktop
+    rm $SCRIPTPATH
+    rm $DESKTPATH
     if [ $? -eq 0 ]; then
-        echo mediarrenger uninstalled successfully
+        echo mediarranger uninstalled successfully
     else
-        echo !! Failed to uninstall mediarrenger
+        echo !! Failed to uninstall mediarranger
         exit 1
     fi
 else
-    if [ -f /usr/bin/mediarrenger ]; then
-        echo "mediarrenger is already installed"
+    if [ -f $SCRIPTPATH ]; then
+        echo "mediarranger is already installed"
         exit
     fi
 
-    cp mediarrenger.sh /usr/bin/mediarrenger
+    cp mediarranger.sh $SCRIPTPATH
 
     echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Terminal=true
-Exec=mediarrenger
-Name=mediarrenger
+Exec=mediarranger
+Name=mediarranger
 Icon=image-jpeg
-Categories=System" > /usr/share/applications/mediarrenger.desktop
+Categories=System" > $DESKTPATH
     if [ $? -eq 0 ]; then
-        echo mediarrenger installed successfully
+        echo mediarranger installed successfully
     else
-        echo !! Failed to install mediarrenger
+        echo !! Failed to install mediarranger
         exit 1
     fi
 fi

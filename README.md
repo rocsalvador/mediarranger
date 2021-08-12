@@ -6,7 +6,7 @@ A simple bash script to arrange photos and videos by years and months
 ## Installation
 Run the following commands:
 ```bash
-git clone https://github.com/rocsalvador/mediarrenger && cd mediarranger
+git clone https://github.com/rocsalvador/mediarranger && cd mediarranger
 ```
 ```bash
 sudo ./installer.sh
