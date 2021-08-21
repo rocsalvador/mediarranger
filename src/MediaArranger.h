@@ -1,3 +1,7 @@
+#ifndef MEDIAARRENGER_H
+#define MEDIAARRENGER_H
+
+#include <iostream>
 #include <filesystem>
 using namespace std;
 
@@ -8,6 +12,10 @@ public:
     void setSourceFolder(string sourceFolder);
 
     void setOutpuFolder(string outputFolder);
+
+    string getSourceFolder();
+
+    string getOutputFolder();
 
     void setRecursiveSearch(bool recursive);
 
@@ -26,3 +34,5 @@ private:
 
     string currentDirectory;
 };
+
+#endif

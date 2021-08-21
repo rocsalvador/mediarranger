@@ -8,7 +8,7 @@ HEADERS += src/MainWindow.h src/MediaArranger.h src/ExifTool.h src/ExifToolPipe.
 
 MOC_DIR = build
 OBJECTS_DIR = build
-UI_DIR = buil
+UI_DIR = build
 
 DESTDIR = build
 

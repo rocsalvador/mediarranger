@@ -1,13 +1,13 @@
 #include <QDebug>
 #include <QFileDialog>
-#include <QThread>
+#include <thread>
 #include "MainWindow.h"
 
 
 MainWindow::MainWindow (QMainWindow* parent) : QMainWindow(parent)
 {
     ui.setupUi(this);
-    arranger = new MediaArranger;
+    arranger = new MediaArranger();
 }
 
 void MainWindow::setSource(QString source)
@@ -28,8 +28,11 @@ void MainWindow::sourceBrowse()
                                              "/home",
                                              QFileDialog::ShowDirsOnly
                                              | QFileDialog::DontResolveSymlinks);
-    arranger->setSourceFolder(sourceFolder.toStdString());
-    emit(sourceSet(sourceFolder));
+    if(sourceFolder != "") {
+        ui.lineEdit->setStyleSheet(("QLineEdit { background-color : white); }"));
+        arranger->setSourceFolder(sourceFolder.toStdString());
+        emit(sourceSet(sourceFolder));
+    }
 }
 
 void MainWindow::outputBrowse()
@@ -38,8 +41,11 @@ void MainWindow::outputBrowse()
                                              "/home",
                                              QFileDialog::ShowDirsOnly
                                              | QFileDialog::DontResolveSymlinks);
-    arranger->setOutpuFolder(outputFolder.toStdString());
-    emit(outputSet(outputFolder));
+    if(outputFolder != "") {
+        ui.lineEdit_2->setStyleSheet(("QLineEdit { background-color : white); }"));
+        arranger->setOutpuFolder(outputFolder.toStdString());
+        emit(outputSet(outputFolder));
+    }
 }
 
 void MainWindow::setRecursive(bool recursive)
@@ -49,12 +55,20 @@ void MainWindow::setRecursive(bool recursive)
 
 void MainWindow::arrange()
 {
-    ui.pushButton_3->setEnabled(false);
-    std::thread t1(&MainWindow::dialogSetter, this);
-    std::thread t2(&MediaArranger::arrange, arranger);
-    t1.join();
-    t2.join();
-    ui.pushButton_3->setEnabled(true);
+    if(arranger->getSourceFolder() == "") {
+        ui.lineEdit->setStyleSheet(("QLineEdit { background-color : rgb(255, 176, 176); }"));
+    }
+    if(arranger->getOutputFolder() == "") {
+        ui.lineEdit_2->setStyleSheet(("QLineEdit { background-color : rgb(255, 176, 176); }"));
+    }
+    if(arranger->getOutputFolder() != "" and arranger->getSourceFolder() != "") {
+        ui.pushButton_3->setEnabled(false);
+        std::thread t1(&MainWindow::dialogSetter, this);
+        std::thread t2(&MediaArranger::arrange, arranger);
+        t1.join();
+        t2.join();
+        ui.pushButton_3->setEnabled(true);
+    }
 }
 
 void MainWindow::dialogSetter()

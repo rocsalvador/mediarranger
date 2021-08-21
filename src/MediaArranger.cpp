@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "MediaArranger.h"
 #include "ExifTool.h"
 
@@ -7,6 +5,8 @@
 MediaArranger::MediaArranger()
 {
     recursiveSearch = false;
+    sourceFolder = "";
+    outputFolder = "";
 }
 
 void MediaArranger::setSourceFolder(string sourceFolder)
@@ -35,7 +35,7 @@ void MediaArranger::arrange() {
         if(filesystem::is_directory(fileName) and !recursiveSearch) break;
     }
 
-    ExifTool et("/usr/bin/exiftool");
+    ExifTool et;
     int nFile = 0;
     for(const auto file : filesystem::recursive_directory_iterator(sourceFolder)) {
         std::string fileName{file.path().u8string()};
@@ -83,5 +83,17 @@ string MediaArranger::getCurrentDirectory()
 {
     return currentDirectory;
 }
+
+string MediaArranger::getOutputFolder()
+{
+    return outputFolder;
+}
+
+string MediaArranger::getSourceFolder()
+{
+    return sourceFolder;
+}
+
+
 
 

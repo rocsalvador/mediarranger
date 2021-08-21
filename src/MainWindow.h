@@ -1,3 +1,6 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
 #include "ui_MainWindow.h"
 #include "MediaArranger.h"
 
@@ -35,3 +38,5 @@ signals:
     void sourceSet(QString);
     void outputSet(QString);
 };
+
+#endif
