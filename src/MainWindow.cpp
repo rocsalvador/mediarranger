@@ -1,24 +1,31 @@
-#include <QDebug>
 #include <QFileDialog>
-#include <thread>
+
 #include "MainWindow.h"
 
 
 MainWindow::MainWindow (QMainWindow* parent) : QMainWindow(parent)
 {
     ui.setupUi(this);
-    arranger = new MediaArranger();
+    ui.lineEdit_3->hide();
+    ui.lineEdit_4->hide();
+    ui.lineEdit_5->hide();
+    ui.label_5->hide();
+    ui.label_6->hide();
+    worker = new Worker;
+    connect(worker, SIGNAL(percentageChanged(int)), this, SLOT(setPercentage(int)));
+    connect(worker, SIGNAL(directoryChanged(QString)), this, SLOT(setDirectoryLabel(QString)));
+    connect(worker, SIGNAL(finished()), this, SLOT(workerFinished()));
 }
 
 void MainWindow::setSource(QString source)
 {
-    arranger->setOutpuFolder(source.toStdString());
+    worker->setOutpuFolder(source.toStdString());
 }
 
 
 void MainWindow::setOutput(QString output)
 {
-    arranger->setOutpuFolder(output.toStdString());
+    worker->setOutpuFolder(output.toStdString());
 }
 
 
@@ -30,7 +37,7 @@ void MainWindow::sourceBrowse()
                                              | QFileDialog::DontResolveSymlinks);
     if(sourceFolder != "") {
         ui.lineEdit->setStyleSheet(("QLineEdit { background-color : white); }"));
-        arranger->setSourceFolder(sourceFolder.toStdString());
+        worker->setSourceFolder(sourceFolder.toStdString());
         emit(sourceSet(sourceFolder));
     }
 }
@@ -43,47 +50,43 @@ void MainWindow::outputBrowse()
                                              | QFileDialog::DontResolveSymlinks);
     if(outputFolder != "") {
         ui.lineEdit_2->setStyleSheet(("QLineEdit { background-color : white); }"));
-        arranger->setOutpuFolder(outputFolder.toStdString());
+        worker->setOutpuFolder(outputFolder.toStdString());
         emit(outputSet(outputFolder));
     }
 }
 
 void MainWindow::setRecursive(bool recursive)
 {
-    arranger->setRecursiveSearch(recursive);
+    worker->setRecursiveSearch(recursive);
 }
 
 void MainWindow::arrange()
 {
-    if(arranger->getSourceFolder() == "") {
+    if(worker->getSourceFolder() == "") {
         ui.lineEdit->setStyleSheet(("QLineEdit { background-color : rgb(255, 176, 176); }"));
     }
-    if(arranger->getOutputFolder() == "") {
+    if(worker->getOutputFolder() == "") {
         ui.lineEdit_2->setStyleSheet(("QLineEdit { background-color : rgb(255, 176, 176); }"));
     }
-    if(arranger->getOutputFolder() != "" and arranger->getSourceFolder() != "") {
+    if(worker->getOutputFolder() != "" and worker->getSourceFolder() != "") {
         ui.pushButton_3->setEnabled(false);
-        std::thread t1(&MainWindow::dialogSetter, this);
-        std::thread t2(&MediaArranger::arrange, arranger);
-        t1.join();
-        t2.join();
-        ui.pushButton_3->setEnabled(true);
+        worker->start();
     }
 }
 
-void MainWindow::dialogSetter()
+void MainWindow::setDirectoryLabel(QString directory)
 {
-    int percentageDone = 0;
-    string currentDirectory = arranger->getCurrentDirectory();
-    while(percentageDone < 100) {
-        while(arranger->getPercentageDone() == percentageDone);
-        ui.progressBar->setValue(percentageDone);
-        ui.label_4->setText("Searching media in " + QString::fromStdString(currentDirectory));
-        percentageDone = arranger->getPercentageDone();
-        currentDirectory = arranger->getCurrentDirectory();
-    }
-    ui.progressBar->setValue(100);
-    ui.label_4->setText("Done!");
+    ui.label_4->setText("Searching media in " + directory);
 }
 
+void MainWindow::setPercentage(int percentage)
+{
+    ui.progressBar->setValue(percentage);
+}
+
+void MainWindow::workerFinished()
+{
+    ui.label_4->setText("Done!");
+    ui.pushButton_3->setEnabled(true);
+}
 

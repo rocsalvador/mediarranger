@@ -1,13 +1,15 @@
-#ifndef MEDIAARRENGER_H
-#define MEDIAARRENGER_H
-
-#include <iostream>
+#include <QThread>
 #include <filesystem>
+#include <iostream>
 using namespace std;
 
-class MediaArranger {
+
+class Worker : public QThread {
+    Q_OBJECT
 public:
-    MediaArranger();
+    Worker();
+
+    void run() override;
 
     void setSourceFolder(string sourceFolder);
 
@@ -26,13 +28,17 @@ public:
     string getCurrentDirectory();
 private:
     string sourceFolder;
+
     string outputFolder;
 
     bool recursiveSearch;
 
-    float percentageDone;
+    int percentageDone;
 
     string currentDirectory;
-};
 
-#endif
+signals:
+    void percentageChanged(int);
+
+    void directoryChanged(QString);
+};

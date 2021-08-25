@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "ui_MainWindow.h"
-#include "MediaArranger.h"
+#include "Worker.h"
 
 
 class MainWindow : public QMainWindow
@@ -18,9 +18,7 @@ private:
     QString sourceFolder;
     QString outputFolder;
 
-    MediaArranger *arranger;
-
-    void dialogSetter();
+    Worker* worker;
 
 private slots:
     void sourceBrowse();
@@ -34,8 +32,15 @@ private slots:
     void setRecursive(bool recursive);
 
     void arrange();
+
+    void setDirectoryLabel(QString directory);
+
+    void setPercentage(int percentage);
+
+    void workerFinished();
 signals:
     void sourceSet(QString);
+
     void outputSet(QString);
 };
 

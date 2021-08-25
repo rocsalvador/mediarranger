@@ -14,140 +14,208 @@
    <string>mediarrenger</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_6">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Directory where images are stored:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLineEdit" name="lineEdit">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="autoFillBackground">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton">
-                <property name="text">
-                 <string>Browse</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Directory where images will be stored:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLineEdit" name="lineEdit_2">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_2">
-                <property name="text">
-                 <string>Browse</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Directory where images will be stored:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Options:</string>
+           <widget class="QLineEdit" name="lineEdit_2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QPushButton" name="pushButton_2">
             <property name="text">
-             <string>Recursive search</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QProgressBar" name="progressBar">
-            <property name="value">
-             <number>0</number>
+             <string>Browse</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
        </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Directory where images are stored:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Options:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Recursive search</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="text">
+         <string>Output directories format (default: Y/M)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_3">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>55</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>/</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_4">
+          <property name="maximumSize">
+           <size>
+            <width>55</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>/</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_5">
+          <property name="maximumSize">
+           <size>
+            <width>55</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_3">
@@ -170,8 +238,8 @@
    <slot>sourceBrowse()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>394</x>
-     <y>68</y>
+     <x>790</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
      <x>558</x>
@@ -190,8 +258,8 @@
      <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>698</x>
-     <y>67</y>
+     <x>700</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -202,8 +270,8 @@
    <slot>outputBrowse()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>788</x>
-     <y>68</y>
+     <x>790</x>
+     <y>66</y>
     </hint>
     <hint type="destinationlabel">
      <x>729</x>
@@ -222,8 +290,8 @@
      <y>69</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>67</y>
+     <x>313</x>
+     <y>133</y>
     </hint>
    </hints>
   </connection>
@@ -234,8 +302,8 @@
    <slot>setRecursive(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>124</y>
+     <x>117</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>156</x>
@@ -266,8 +334,8 @@
    <slot>setOutput(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>698</x>
-     <y>67</y>
+     <x>700</x>
+     <y>65</y>
     </hint>
     <hint type="destinationlabel">
      <x>482</x>
@@ -282,12 +350,92 @@
    <slot>setSource(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>169</x>
-     <y>67</y>
+     <x>178</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>120</x>
      <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEdit_3</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>43</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_5</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>73</x>
+     <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lineEdit_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_6</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>204</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>145</x>
+     <y>240</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEdit_5</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>236</y>
     </hint>
    </hints>
   </connection>

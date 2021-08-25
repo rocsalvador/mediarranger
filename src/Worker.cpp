@@ -1,32 +1,38 @@
-#include "MediaArranger.h"
+#include "Worker.h"
 #include "ExifTool.h"
 
+void Worker::run()
+{
+    arrange();
+}
 
-MediaArranger::MediaArranger()
+
+Worker::Worker()
 {
     recursiveSearch = false;
     sourceFolder = "";
     outputFolder = "";
 }
 
-void MediaArranger::setSourceFolder(string sourceFolder)
+void Worker::setSourceFolder(string sourceFolder)
 {
     this->sourceFolder = sourceFolder;
     currentDirectory = sourceFolder;
 }
 
-void MediaArranger::setOutpuFolder(string outpuFolder)
+void Worker::setOutpuFolder(string outpuFolder)
 {
     this->outputFolder = outpuFolder;
 }
 
-void MediaArranger::setRecursiveSearch(bool recursive)
+void Worker::setRecursiveSearch(bool recursive)
 {
     recursiveSearch = recursive;
 }
 
-void MediaArranger::arrange() {
+void Worker::arrange() {
     percentageDone = 0;
+    int aux = percentageDone;
 
     int nFiles = 0;
     for(const auto file : filesystem::recursive_directory_iterator(sourceFolder)) {
@@ -38,15 +44,18 @@ void MediaArranger::arrange() {
     ExifTool et;
     int nFile = 0;
     for(const auto file : filesystem::recursive_directory_iterator(sourceFolder)) {
-        std::string fileName{file.path().u8string()};
+        string fileName{file.path().u8string()};
 
         ++nFile;
-        percentageDone = nFile/float(nFiles)*100.0;
+        percentageDone = nFile/float(nFiles)*100;
+        if(percentageDone != aux) emit(percentageChanged(percentageDone));
+        aux = percentageDone;
 
         size_t pointPos = fileName.find_last_of(".");
         if(filesystem::is_directory(fileName)) {
             if(!recursiveSearch) break;
             currentDirectory = fileName;
+            emit(directoryChanged(QString::fromStdString(fileName)));
         }
         else if(pointPos != string::npos) {
             string fileExtension = fileName.substr(pointPos, fileName.length()-1);
@@ -66,7 +75,8 @@ void MediaArranger::arrange() {
                         string relativePath = "/" + year + "/" +  month;
                         filesystem::create_directories(outputFolder + relativePath);
                         string newFileName = outputFolder + relativePath + fileName.substr(fileName.find_last_of("/"), fileName.length()- fileName.find_last_of("/"));
-                        filesystem::rename(fileName, newFileName);
+                        filesystem::copy(fileName, newFileName, filesystem::copy_options::update_existing);
+                        cout << "Copying " << fileName << " to " << newFileName << endl;
                     }
                 }
             }
@@ -74,26 +84,23 @@ void MediaArranger::arrange() {
     }
 }
 
-float MediaArranger::getPercentageDone()
+float Worker::getPercentageDone()
 {
     return percentageDone;
 }
 
-string MediaArranger::getCurrentDirectory()
+string Worker::getCurrentDirectory()
 {
     return currentDirectory;
 }
 
-string MediaArranger::getOutputFolder()
+string Worker::getOutputFolder()
 {
     return outputFolder;
 }
 
-string MediaArranger::getSourceFolder()
+string Worker::getSourceFolder()
 {
     return sourceFolder;
 }
-
-
-
 
