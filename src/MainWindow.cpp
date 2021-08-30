@@ -12,9 +12,12 @@ MainWindow::MainWindow (QMainWindow* parent) : QMainWindow(parent)
     ui.label_5->hide();
     ui.label_6->hide();
     worker = new Worker;
+
     connect(worker, SIGNAL(percentageChanged(int)), this, SLOT(setPercentage(int)));
     connect(worker, SIGNAL(directoryChanged(QString)), this, SLOT(setDirectoryLabel(QString)));
     connect(worker, SIGNAL(finished()), this, SLOT(workerFinished()));
+
+    connect(ui.checkBox_3, SIGNAL(clicked(bool)), worker, SLOT(setMoveFiles(bool)));
 }
 
 void MainWindow::setSource(QString source)

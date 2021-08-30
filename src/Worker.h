@@ -1,6 +1,7 @@
 #include <QThread>
 #include <filesystem>
 #include <iostream>
+#include <unordered_set>
 using namespace std;
 
 
@@ -11,9 +12,9 @@ public:
 
     void run() override;
 
-    void setSourceFolder(string sourceFolder);
+    void setSourceFolder(const string& sourceFolder);
 
-    void setOutpuFolder(string outputFolder);
+    void setOutpuFolder(const string& outputFolder);
 
     string getSourceFolder();
 
@@ -22,10 +23,6 @@ public:
     void setRecursiveSearch(bool recursive);
 
     void arrange();
-
-    float getPercentageDone();
-
-    string getCurrentDirectory();
 private:
     string sourceFolder;
 
@@ -33,9 +30,14 @@ private:
 
     bool recursiveSearch;
 
-    int percentageDone;
+    bool moveFiles;
 
     string currentDirectory;
+
+    unordered_set<string> supportedFileExtensions;
+
+public slots:
+    void setMoveFiles(bool moveFiles);
 
 signals:
     void percentageChanged(int);

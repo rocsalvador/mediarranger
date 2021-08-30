@@ -101,6 +101,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="checkBox_3">
+        <property name="text">
+         <string>Move files instead of copying them</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="checkBox">
         <property name="text">
          <string>Recursive search</string>
